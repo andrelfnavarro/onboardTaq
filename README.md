@@ -1,5 +1,9 @@
 # onboardTaq
 
-Projeto de onboard 
+Title: Projeto de onboard - Taqtile
 
-Update 1!
+Description: projeto para inicicão do estágio na Taqtile
+
+Environment and tools: *
+
+Steps to run and debug: *
