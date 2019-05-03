@@ -14,5 +14,5 @@ Environment and tools:
     - npm: 5.3.0
 
 Steps to run and debug: in order to run the project, you should have npm installed and then use:
-    npm start run
+    npm run start
     After that, a webpage will open on a local host showing you the Hello World message.
