@@ -5,7 +5,7 @@ Title: Taqtile Onboard
 Description: onboard initiation project for Taqtile intern devs.
 
 Environment and tools: 
-    Coded in Javascript 
+    - Coded in Javascript (Typescript). 
     - OS used to develop: macOS mojave version 10.14.2
     - Node version: v10.15.3
     - react: 16.8.6
