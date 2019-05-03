@@ -13,6 +13,11 @@ Environment and tools:
     - react-scripts: 0.9.x
     - nvm: 0.26.1
 
-Steps to run and debug: in order to run the project, you should have npm installed and then use:
+Steps to run and debug: in order to run the project, you should have npm installed. Install it using:
+    npm install
+    
+    and then use:
+
     npm run start
+    
     After that, a webpage will open on a local host showing you the Hello World message.
