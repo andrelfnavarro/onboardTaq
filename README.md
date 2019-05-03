@@ -1,8 +1,23 @@
-#onboardTaq
-Title: Projeto de onboard - Taqtile
+# onboardTaq
 
-Description: projeto para inicicão do estágio na Taqtile
+Title: Taqtile Onboard
 
-Environment and tools: *
+Description: onboard initiation project for Taqtile intern devs.
 
-Steps to run and debug: *
+Environment and tools: 
+    - Coded in Javascript (Typescript). 
+    - OS used to develop: macOS mojave version 10.14.2
+    - Node version: v10.15.3
+    - react: 16.8.6
+    - react-dom: 16.8.6
+    - react-scripts: 0.9.x
+    - nvm: 0.26.1
+
+Steps to run and debug: in order to run the project, you should have npm installed. Install it using:
+    npm install
+    
+    and then use:
+
+    npm run start
+    
+    After that, a webpage will open on a local host showing you the Hello World message.
