@@ -1,0 +1,42 @@
+@media all and (min-width: 480px) {
+    .Login {
+        text-align: center;
+        padding: 60px 0;
+    }
+  
+    .Login form {
+        margin: 0 auto;
+        max-width: 320px; 
+        padding: 5px; 
+        width: 200px;
+        height: 20px; 
+        border: 2px ;
+        border-radius: 5px;
+        display: block;
+        text-align: justify
+    }
+
+    .Login label{
+        margin-top: 10px;
+        display: block;
+        text-align: left;
+        font-size: 20px;
+    }
+
+    .Login input{
+        padding-right: 100px;
+        padding-bottom: 15px;
+        border-radius: 10px;
+    }
+
+    .Login button {
+        margin-top: 130px;
+        background-color: #9966ff;
+        margin-left: 25px;
+        margin-right: 25px;
+        font-size: 15px;
+        min-width: 10px;
+        border: 2px solid #9966ff;
+        border-radius: 5px;
+      }
+  }

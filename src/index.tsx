@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Hello from './components/Hello';
+import Login from './components/Login';
 
 ReactDOM.render(
-    <Hello name="World" enthusiasmLevel={10} />,
+    <Login />,
     document.getElementById('root') as HTMLElement
   );
 
