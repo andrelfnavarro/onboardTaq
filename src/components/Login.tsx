@@ -2,12 +2,8 @@ import * as React from 'react';
 import "./Login.css";
 
 
-export interface Props {
-    email?: string;
-    password?: number;
-  }
 
-function Login({email = "andre.navarro@taqtile.com", password = 1234567890}:Props){
+function Login(){
     return(
         <div className="Login">
         <h1>
@@ -17,7 +13,7 @@ function Login({email = "andre.navarro@taqtile.com", password = 1234567890}:Prop
             <label>
                 E-mail  
             </label>
-            <input type="text" name="email" />
+        <input type="text" name="email" />
             
             <label>
                 Senha
