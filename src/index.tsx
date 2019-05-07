@@ -5,9 +5,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Hello from './components/Hello';
 import Login from './components/Login';
+import LoginPage from './components/Login';
 
 ReactDOM.render(
-    <Login />,
+    <LoginPage />,
     document.getElementById('root') as HTMLElement
   );
 
