@@ -4,6 +4,8 @@ import { Mutation, MutationFn, MutationResult } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
 import { FormErrors } from './FormErrors';
 import "./Login.css";
+import { RouteComponentProps } from 'react-router-dom';
+
 
 const LOGIN_OPERATION = gql`
   mutation LoginOp($email:String!, $password:String!){
@@ -19,7 +21,9 @@ const LOGIN_OPERATION = gql`
     }
   }
   `
-export interface LoginPageProps {
+
+
+export interface LoginPageProps extends RouteComponentProps {
 }
 
 export interface LoginPageState {
@@ -37,8 +41,8 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     super(props);
     this.state = {
       token: "",
-      email: '',
-      password: '',
+      email: 'admin@taqtile.com',
+      password: '1111',
       formErrors: { email: '', password: '' },
       emailValid: false,
       passwordValid: false,
@@ -61,38 +65,43 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
         }}
         onCompleted={this.handleLoginSuccess}
       >
-        {(mutation: MutationFn<any>, result: MutationResult) => (
-          <form className="Login" onSubmit={(event) => this._submit(mutation, event)}>
-            <h1>
-              Bem-vindo(a) à Taqtile!
+        {(mutation: MutationFn<any>, result: MutationResult) => {
+          if (result.loading) return <h1>Carregando...</h1>
+          if (result.error) return <h1>{"Erro!" + result.error.message}</h1>
+
+          return (
+            <form className="Login" onSubmit={(event) => this._submit(mutation, event)}>
+              <h1>
+                Bem-vindo(a) à Taqtile!
       </h1>
 
-            <div className="panel panel-default">
-              <FormErrors formErrors={this.state.formErrors} />
-            </div>
+              <div className="panel panel-default">
+                <FormErrors formErrors={this.state.formErrors} />
+              </div>
 
-            <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-              <label htmlFor="email">E-mail</label>
-              <input type="email" required className="form-control" name="email"
-                value={this.state.email}
-                onChange={this.handleUserEmail} />
-            </div>
+              <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
+                <label htmlFor="email">E-mail</label>
+                <input type="email" required className="form-control" name="email"
+                  value={this.state.email}
+                  onChange={this.handleUserEmail} />
+              </div>
 
-            <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-              <label htmlFor="password">Senha</label>
-              <input type="password" className="form-control" name="password"
-                value={this.state.password}
-                onChange={this.handleUserPassword} />
-            </div>
-
-            <button type="submit" >Entrar</button>
-          </form>
-        )}</Mutation>
+              <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
+                <label htmlFor="password">Senha</label>
+                <input type="password" className="form-control" name="password"
+                  value={this.state.password}
+                  onChange={this.handleUserPassword} />
+              </div>
+              <button type="submit" >Entrar</button>
+            </form>
+          )
+        }}</Mutation>
     );
   }
 
   private handleLoginSuccess = (data: any) => {
     this._saveUserData(data.Login.token)
+    this.props.history.push('/users');
   }
 
   private handleUserEmail = (e: any) => {
@@ -139,17 +148,18 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
   }
   _submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
     event.preventDefault()
-    const { 
+    const {
       email,
       password,
     } = this.state;
-    
+
     mutationFn({
       variables: {
         email,
         password,
       }
     });
+
   }
 
   _saveUserData = (token: string) => {

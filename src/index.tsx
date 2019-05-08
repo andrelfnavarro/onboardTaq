@@ -7,8 +7,8 @@ import ReactDOM from 'react-dom';
 import LoginPage from './components/Login';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { Route } from 'react-router';
-
+import { Route,  BrowserRouter as Router, Switch } from 'react-router-dom';
+import UserList from './components/UserList';
 
 const httpLink = createHttpLink({
   uri: 'https://tq-template-server-sample.herokuapp.com/graphql'
@@ -20,14 +20,15 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-
   <ApolloProvider client={client}>
-
-    <Route path = "/" component = {LoginPage}></Route>
-    <Route path = "/UserList" component = {UserList}></Route>
+    <Router>
+      <Switch>
+        <Route path = "/users" component = {UserList} />
+        <Route path = "/" component = {LoginPage} />
+      </Switch>
+    </Router>
   </ApolloProvider>,
   document.getElementById('root') as HTMLElement
-
 );
 
 
