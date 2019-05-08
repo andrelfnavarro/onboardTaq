@@ -5,7 +5,17 @@ import { AUTH_TOKEN } from '../constants';
 import { FormErrors } from './FormErrors';
 import "./Login.css";
 import { RouteComponentProps } from 'react-router-dom';
+import { css } from '@emotion/core';
+import { ClipLoader } from 'react-spinners';
 
+
+const override:any = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+    display:block;
+    margin: 0 auto;
+`;
 
 const LOGIN_OPERATION = gql`
   mutation LoginOp($email:String!, $password:String!){
@@ -66,7 +76,17 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
         onCompleted={this.handleLoginSuccess}
       >
         {(mutation: MutationFn<any>, result: MutationResult) => {
-          if (result.loading) return <h1>Carregando...</h1>
+          if (result.loading) return (
+            <div className='sweet-loading'>
+              <ClipLoader
+                css={override}
+                sizeUnit={"px"}
+                size={150}
+                color={'#123abc'}
+                loading={result.loading}
+              />
+            </div> 
+          )
           if (result.error) return <h1>{"Erro!" + result.error.message}</h1>
 
           return (
