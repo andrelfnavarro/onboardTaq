@@ -10,6 +10,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import UserList from './components/UserList';
+import AddUser from './components/AddUser';
 
 const httpLink = createHttpLink({
   uri: 'https://tq-template-server-sample.herokuapp.com/graphql'
@@ -38,6 +39,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
       <Switch>
+        <Route path="/adduser" component={AddUser} />
         <Route path="/users" component={UserList} />
         <Route path="/" component={LoginPage} />
       </Switch>

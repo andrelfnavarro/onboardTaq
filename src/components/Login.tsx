@@ -9,7 +9,7 @@ import { css } from '@emotion/core';
 import { ClipLoader } from 'react-spinners';
 
 
-const override: any = css`
+export const override: any = css`
     display: block;
     margin: 0 auto;
     border-color: red;

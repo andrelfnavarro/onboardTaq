@@ -2,6 +2,9 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { ClipLoader } from 'react-spinners';
+import './UserList.css'
+import { RouteComponentProps } from 'react-router-dom';
+
 
 
 const USERS_FETCH = gql`
@@ -14,8 +17,16 @@ query UserList{
   }
 }`
 
-export default class UserListPage extends React.Component {
+export interface UserListPageProps extends RouteComponentProps {
+}
 
+export default class UserListPage extends React.Component<UserListPageProps> {
+  constructor(props: UserListPageProps) {
+    super(props);
+    this.state = {
+      
+    }
+  }
   render() {
     return (
       <Query
@@ -36,6 +47,11 @@ export default class UserListPage extends React.Component {
 
             <div>
               <h1 style={{ textAlign: 'center' }}> Usuários cadastrados</h1>
+              <div className = 'addButtonBox'>
+              <form onSubmit={(event) => this.props.history.push('/adduser')}> 
+                <button type="submit" className='addButton'>Adicione um usuário</button>
+                </form>
+              </div>
               <div >
                 <ul>
                   {Object.keys(list).map((i) =>
