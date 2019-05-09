@@ -90,7 +90,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
 
           return (
             <>
-              <form className="Login" onSubmit={(event) => this._submit(mutation, event)}>
+              <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
                 <h1>
                   Bem-vindo(a) à Taqtile!
               </h1>
@@ -116,12 +116,13 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
               </form>
             </>
           )
-        }}</Mutation>
+        }}
+      </Mutation>
     );
   }
 
   private handleLoginSuccess = (data: any) => {
-    this._saveUserData(data.Login.token)
+    this.saveUserData(data.Login.token)
     this.props.history.push('/users');
   }
 
@@ -137,8 +138,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
 
   private validateField(fieldName: string, value: any) {
     let fieldValidationErrors = this.state.formErrors;
-    let { emailValid } = this.state;
-    let { passwordValid } = this.state;
+    let { emailValid, passwordValid } = this.state;
 
     switch (fieldName) {
       case 'email':
@@ -167,7 +167,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
   private errorClass(error: any) {
     return (error.length === 0 ? '' : 'has-error');
   }
-  private _submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
+  private submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
     event.preventDefault()
     const {
       email,
@@ -183,7 +183,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
 
   }
 
-  private _saveUserData = (token: string) => {
+  private saveUserData = (token: string) => {
     localStorage.setItem(AUTH_TOKEN, token)
   }
 }
