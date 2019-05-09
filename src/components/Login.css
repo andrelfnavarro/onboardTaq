@@ -15,7 +15,7 @@
         border: 2px ;
         border-radius: 5px;
         display: block;
-        text-align: justify;
+        text-align: center;
     }
 
     .Login label{
@@ -42,4 +42,5 @@
         border: 2px solid #9966ff;
         border-radius: 5px;
       }
+    
   }
