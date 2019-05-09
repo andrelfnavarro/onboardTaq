@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 import React from 'react';
-import { Mutation, MutationFn, MutationResult } from 'react-apollo';
+import { Mutation, MutationFn, MutationResult,  } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
 import { FormErrors } from './FormErrors';
 import "./Login.css";
@@ -77,24 +77,24 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       >
         {(mutation: MutationFn<any>, result: MutationResult) => {
           if (result.loading) return (
-            <div className='sweet-loading'>
+            <div className='sweet-loading' style={{textAlign:'center', display:'block'}}>
               <ClipLoader
                 css={override}
                 sizeUnit={"px"}
                 size={150}
-                color={'#123abc'}
+                color={'#e6b3ff'}
                 loading={result.loading}
               />
             </div> 
-          )
-          if (result.error) return <h1>{"Erro!" + result.error.message}</h1>
+          )            
 
           return (
+            <>
+            {result.error && <h1 style={{textAlign:'center'}}>{"Erro!" + result.error.message}</h1>}
             <form className="Login" onSubmit={(event) => this._submit(mutation, event)}>
               <h1>
-                Bem-vindo(a) à Taqtile!
-      </h1>
-
+                Bem-vindo(a) à Taqtile! 
+              </h1>
               <div className="panel panel-default">
                 <FormErrors formErrors={this.state.formErrors} />
               </div>
@@ -114,6 +114,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
               </div>
               <button type="submit" >Entrar</button>
             </form>
+            </>
           )
         }}</Mutation>
     );
