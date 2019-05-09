@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloLink, HttpLink} from 'apollo-boost';
+import { ApolloClient } from 'apollo-boost';
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http';
@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import LoginPage from './components/Login';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { Route,  BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import UserList from './components/UserList';
 
 const httpLink = createHttpLink({
@@ -38,8 +38,8 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
       <Switch>
-        <Route path = "/users" component = {UserList} />
-        <Route path = "/" component = {LoginPage} />
+        <Route path="/users" component={UserList} />
+        <Route path="/" component={LoginPage} />
       </Switch>
     </Router>
   </ApolloProvider>,

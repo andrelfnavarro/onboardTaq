@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 import React from 'react';
-import { Mutation, MutationFn, MutationResult,  } from 'react-apollo';
+import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
 import { FormErrors } from './FormErrors';
 import "./Login.css";
@@ -9,7 +9,7 @@ import { css } from '@emotion/core';
 import { ClipLoader } from 'react-spinners';
 
 
-const override:any = css`
+const override: any = css`
     display: block;
     margin: 0 auto;
     border-color: red;
@@ -77,7 +77,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       >
         {(mutation: MutationFn<any>, result: MutationResult) => {
           if (result.loading) return (
-            <div className='sweet-loading' style={{textAlign:'center', display:'block'}}>
+            <div className='sweet-loading' style={{ textAlign: 'center', display: 'block' }}>
               <ClipLoader
                 css={override}
                 sizeUnit={"px"}
@@ -85,35 +85,35 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                 color={'#e6b3ff'}
                 loading={result.loading}
               />
-            </div> 
-          )            
+            </div>
+          )
 
           return (
             <>
-            {result.error && <h1 style={{textAlign:'center'}}>{"Erro!" + result.error.message}</h1>}
-            <form className="Login" onSubmit={(event) => this._submit(mutation, event)}>
-              <h1>
-                Bem-vindo(a) à Taqtile! 
+              <form className="Login" onSubmit={(event) => this._submit(mutation, event)}>
+                <h1>
+                  Bem-vindo(a) à Taqtile!
               </h1>
-              <div className="panel panel-default">
-                <FormErrors formErrors={this.state.formErrors} />
-              </div>
+                <div className="panel panel-default">
+                  <FormErrors formErrors={this.state.formErrors} />
+                </div>
+                {result.error && <div style={{ textAlign: 'center', color: 'red' }}>{"Erro!" + result.error.message}</div>}
 
-              <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-                <label htmlFor="email">E-mail</label>
-                <input type="email" required className="form-control" name="email"
-                  value={this.state.email}
-                  onChange={this.handleUserEmail} />
-              </div>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
+                  <label htmlFor="email">E-mail</label>
+                  <input type="email" required className="form-control" name="email"
+                    value={this.state.email}
+                    onChange={this.handleUserEmail} />
+                </div>
 
-              <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                <label htmlFor="password">Senha</label>
-                <input type="password" className="form-control" name="password"
-                  value={this.state.password}
-                  onChange={this.handleUserPassword} />
-              </div>
-              <button type="submit" >Entrar</button>
-            </form>
+                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
+                  <label htmlFor="password">Senha</label>
+                  <input type="password" className="form-control" name="password"
+                    value={this.state.password}
+                    onChange={this.handleUserPassword} />
+                </div>
+                <button type="submit" >Entrar</button>
+              </form>
             </>
           )
         }}</Mutation>
@@ -147,7 +147,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
         break;
       case 'password':
         passwordValid = value.match(/^((?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,})$/i);
-        fieldValidationErrors.password = passwordValid ? '' : ' inválida. Deve conter mais de 7 caracteres (um numero e uma letra)';
+        fieldValidationErrors.password = passwordValid ? '' : 'inválida. Deve conter mais de 7 caracteres (um número e uma letra)';
         break;
       default:
         break;
@@ -167,7 +167,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
   private errorClass(error: any) {
     return (error.length === 0 ? '' : 'has-error');
   }
-  _submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
+  private _submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
     event.preventDefault()
     const {
       email,
@@ -183,7 +183,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
 
   }
 
-  _saveUserData = (token: string) => {
+  private _saveUserData = (token: string) => {
     localStorage.setItem(AUTH_TOKEN, token)
   }
 }

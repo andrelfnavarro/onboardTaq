@@ -1,5 +1,4 @@
 import React from 'react';
-import LoginPage from './Login'
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { ClipLoader } from 'react-spinners';
@@ -34,12 +33,12 @@ export default class UserListPage extends React.Component {
           if (result.error) return <h1>Erro!</h1>
           let list = result.data.Users.nodes
           return (
-            
+
             <div>
               <h1 style={{ textAlign: 'center' }}> Usuários cadastrados</h1>
               <div >
                 <ul>
-                {Object.keys(list).map((i) =>
+                  {Object.keys(list).map((i) =>
                     <li key={list[i].name}>
                       <div style={{ padding: 10 }}>
                         <div style={{ outline: 'solid' }}>
@@ -52,7 +51,7 @@ export default class UserListPage extends React.Component {
                 </ul>
               </div>
             </div>
-    
+
           )
         }
         }</Query>
