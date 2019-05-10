@@ -20,14 +20,10 @@ query UserDetails($id:Int!){
   `
 
 
-export interface UserDetailsProps extends RouteComponentProps<{ id: string }> {
+export interface UserDetailsProps {
+  id: string;
 }
-
-
-export default class UserDetailsPage extends React.Component<UserDetailsProps> {
-  constructor(props: UserDetailsProps) {
-    super(props);
-  }
+export default class UserDetailsPage extends React.Component<RouteComponentProps<UserDetailsProps>> {
   render() {
     return (
       <Query
@@ -41,7 +37,6 @@ export default class UserDetailsPage extends React.Component<UserDetailsProps> {
           if (result.error) return <h1>{"Erro!" + result.error.message}</h1>
           let user = result.data.User
           return (
-
             <div>
               <h1 style={{ textAlign: 'center' }}> Dados de {user.name}</h1>
               <div >
@@ -60,10 +55,9 @@ export default class UserDetailsPage extends React.Component<UserDetailsProps> {
                 </form>
               </div>
             </div>
-
           )
         }
-        }</Query>
+      }</Query>
     )
   }
 }
