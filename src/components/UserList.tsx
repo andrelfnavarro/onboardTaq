@@ -9,7 +9,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 const USERS_FETCH = gql`
 query UserList{
-  Users{
+  Users(limit:100){
     nodes{
       name
       email

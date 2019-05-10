@@ -105,7 +105,7 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
                         <>
                             <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
                                 <h1>
-                                    Bem-vindo(a) à Taqtile!
+                                    Preencha os dados do novo usuário
                     </h1>
                                 <div className="panel panel-default">
                                     <FormErrors formErrors={this.state.formErrors} />
@@ -120,7 +120,7 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
                                 </div>
 
                                 <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                                    <label htmlFor="password">password</label>
+                                    <label htmlFor="password">Senha</label>
                                     <input type="password" className="form-control" name="password"
                                         value={this.state.password}
                                         onChange={this.handleUserPassword} />
@@ -153,7 +153,7 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
                                         value={this.state.birthDate}
                                         onChange={this.handleUserBirthDate} />
                                 </div>
-                                <button type="submit" >Submit</button>
+                                <button type="submit" >Criar</button>
                             </form>
                         </>
                     )
