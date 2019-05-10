@@ -11,6 +11,9 @@ import * as serviceWorker from './serviceWorker';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import UserList from './components/UserList';
 import AddUser from './components/AddUser';
+import UserDetails from './components/UserDetails'
+
+
 
 const httpLink = createHttpLink({
   uri: 'https://tq-template-server-sample.herokuapp.com/graphql'
@@ -30,7 +33,7 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 })
@@ -39,9 +42,10 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Router>
       <Switch>
+        <Route path="/userdetails/:id" component={UserDetails}/>
         <Route path="/adduser" component={AddUser} />
         <Route path="/users" component={UserList} />
-        <Route path="/" component={LoginPage} />
+        <Route exact path="/" component={LoginPage} />
       </Switch>
     </Router>
   </ApolloProvider>,

@@ -6,8 +6,7 @@ import { FormErrors } from './FormErrors';
 import "./Login.css";
 import { RouteComponentProps } from 'react-router-dom';
 import { css } from '@emotion/core';
-import { ClipLoader } from 'react-spinners';
-
+import Loader from './Loader'
 
 export const override: any = css`
     display: block;
@@ -52,7 +51,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     this.state = {
       token: "",
       email: 'admin@taqtile.com',
-      password: '1111',
+      password: '1234qwer',
       formErrors: { email: '', password: '' },
       emailValid: false,
       passwordValid: false,
@@ -77,19 +76,11 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       >
         {(mutation: MutationFn<any>, result: MutationResult) => {
           if (result.loading) return (
-            <div className='sweet-loading' style={{ textAlign: 'center', display: 'block' }}>
-              <ClipLoader
-                css={override}
-                sizeUnit={"px"}
-                size={150}
-                color={'#e6b3ff'}
-                loading={result.loading}
-              />
-            </div>
+            Loader(result.loading)
           )
-
           return (
             <>
+
               <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
                 <h1>
                   Bem-vindo(a) à Taqtile!
@@ -98,21 +89,21 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                   <FormErrors formErrors={this.state.formErrors} />
                 </div>
                 {result.error && <div style={{ textAlign: 'center', color: 'red' }}>{"Erro!" + result.error.message}</div>}
-
                 <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-                  <label htmlFor="email">E-mail</label>
+                  <label htmlFor="email">email</label>
                   <input type="email" required className="form-control" name="email"
                     value={this.state.email}
                     onChange={this.handleUserEmail} />
                 </div>
 
+
                 <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                  <label htmlFor="password">Senha</label>
+                  <label htmlFor="password">senha</label>
                   <input type="password" className="form-control" name="password"
                     value={this.state.password}
                     onChange={this.handleUserPassword} />
                 </div>
-                <button type="submit" >Entrar</button>
+                <button type="submit" disabled={!this.state.formValid} >Entrar</button>
               </form>
             </>
           )
@@ -167,7 +158,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
   private errorClass(error: any) {
     return (error.length === 0 ? '' : 'has-error');
   }
-  private submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
+  private submit = (mutationFn: MutationFn, event: React.FormEvent) => {
     event.preventDefault()
     const {
       email,
