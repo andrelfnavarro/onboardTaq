@@ -21,6 +21,7 @@ const CREATE_OPERATION = gql`
   }
   `
 
+
 export interface AddUserProps extends RouteComponentProps {
 }
 
@@ -94,13 +95,14 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
                             <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
                                 <h1>
                                     Preencha os dados do novo usuário
-                    </h1>
+                                </h1>
                                 <div className="panel panel-default">
                                     <FormErrors formErrors={this.state.formErrors} />
                                 </div>
                                 {result.error && <div style={{ textAlign: 'center', color: 'red' }}>{"Erro!" + result.error.message}</div>}
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
+                                <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}
+                                >
                                     <label htmlFor="email">E-mail</label>
                                     <input type="email" required className="form-control" name="email"
                                         value={this.state.email}
@@ -109,39 +111,55 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
 
                                 <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
                                     <label >Senha</label>
-                                    <input type="password" className="form-control" name="password"
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        name="password"
                                         value={this.state.password}
-                                        onChange={this.handleUserPassword} />
+                                        onChange={this.handleUserPassword} /
+                                    >
                                 </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}>
+                                <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}
+                                >
                                     <label >Nome</label>
-                                    <input className="form-control" name="name"
+                                    <input
+                                        className="form-control"
+                                        name="name"
                                         value={this.state.name}
                                         onChange={this.handleUserName} />
                                 </div>
 
                                 <div className={`form-group ${this.errorClass(this.state.formErrors.role)}`}>
                                     <label >Role</label>
-                                    <input className="form-control" name="role"
+                                    <input
+                                        className="form-control"
+                                        name="role"
                                         value={this.state.role}
                                         onChange={this.handleUserRole} />
                                 </div>
 
                                 <div className={`form-group ${this.errorClass(this.state.formErrors.cpf)}`}>
                                     <label >CPF</label>
-                                    <input className="form-control" name="cpf"
+                                    <input
+                                        className="form-control"
+                                        name="cpf"
                                         value={this.state.cpf}
                                         onChange={this.handleUserCPF} />
                                 </div>
 
                                 <div className={`form-group ${this.errorClass(this.state.formErrors.birthDate)}`}>
                                     <label >Data de nascimento</label>
-                                    <input className="form-control" name="birth-date"
+                                    <input
+                                        className="form-control"
+                                        name="birth-date"
                                         value={this.state.birthDate}
                                         onChange={this.handleUserBirthDate} />
                                 </div>
-                                <button type="submit" disabled={!this.state.formValid}>Criar</button>
+                                <button type="submit"
+                                    disabled={!this.state.formValid}>
+                                    Criar
+                                </button>
                             </form>
                         </>
                     )

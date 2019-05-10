@@ -51,7 +51,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     this.state = {
       token: "",
       email: 'admin@taqtile.com',
-      password: '1111',
+      password: '1234qwer',
       formErrors: { email: '', password: '' },
       emailValid: false,
       passwordValid: false,
@@ -159,7 +159,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
   private errorClass(error: any) {
     return (error.length === 0 ? '' : 'has-error');
   }
-  private submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
+  private submit = (mutationFn: MutationFn, event: React.FormEvent) => {
     event.preventDefault()
     const {
       email,
@@ -176,7 +176,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
   }
 
   private saveUserData = (token: string) => {
-    sessionStorage.setItem(AUTH_TOKEN, token)
+    localStorage.setItem(AUTH_TOKEN, token)
   }
 }
 
