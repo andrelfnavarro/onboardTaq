@@ -6,8 +6,7 @@ import { FormErrors } from './FormErrors';
 import "./Login.css";
 import { RouteComponentProps } from 'react-router-dom';
 import { css } from '@emotion/core';
-import { ClipLoader } from 'react-spinners';
-
+import Loader from './Loader'
 
 export const override: any = css`
     display: block;
@@ -77,19 +76,12 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       >
         {(mutation: MutationFn<any>, result: MutationResult) => {
           if (result.loading) return (
-            <div className='sweet-loading' style={{ textAlign: 'center', display: 'block' }}>
-              <ClipLoader
-                css={override}
-                sizeUnit={"px"}
-                size={150}
-                color={'#e6b3ff'}
-                loading={result.loading}
-              />
-            </div>
+              Loader(result.loading)
           )
 
           return (
             <>
+            
               <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
                 <h1>
                   Bem-vindo(a) à Taqtile!
@@ -112,7 +104,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                     value={this.state.password}
                     onChange={this.handleUserPassword} />
                 </div>
-                <button type="submit" >Entrar</button>
+                <button type="submit" disabled={!this.state.formValid} >Entrar</button>
               </form>
             </>
           )
@@ -184,7 +176,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
   }
 
   private saveUserData = (token: string) => {
-    localStorage.setItem(AUTH_TOKEN, token)
+    sessionStorage.setItem(AUTH_TOKEN, token)
   }
 }
 

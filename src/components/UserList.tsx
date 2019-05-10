@@ -1,11 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
-import { ClipLoader } from 'react-spinners';
 import './UserList.css'
-import { RouteComponentProps } from 'react-router-dom';
-
-
+import { RouteComponentProps, Link } from 'react-router-dom';
+import Loader from './Loader'
 
 const USERS_FETCH = gql`
 query UserList{
@@ -13,6 +11,7 @@ query UserList{
     nodes{
       name
       email
+      id
     }
   }
 }`
@@ -20,11 +19,16 @@ query UserList{
 export interface UserListPageProps extends RouteComponentProps {
 }
 
-export default class UserListPage extends React.Component<UserListPageProps> {
+export interface UserListPageState{
+  list: any[],
+}
+
+
+export default class UserListPage extends React.Component<UserListPageProps, UserListPageState> {
   constructor(props: UserListPageProps) {
     super(props);
     this.state = {
-      
+      list: []
     }
   }
   render() {
@@ -32,34 +36,31 @@ export default class UserListPage extends React.Component<UserListPageProps> {
       <Query
         query={USERS_FETCH}>{(result: QueryResult) => {
           if (result.loading) return (
-            <div className='sweet-loading' style={{ textAlign: 'center', display: 'block' }}>
-              <ClipLoader
-                sizeUnit={"px"}
-                size={150}
-                color={'#e6b3ff'}
-                loading={result.loading}
-              />
-            </div>
+              Loader(result.loading)
           )
           if (result.error) return <h1>Erro!</h1>
-          let list = result.data.Users.nodes
+            // this.state.list = result.data.Users.nodes
           return (
 
             <div>
               <h1 style={{ textAlign: 'center' }}> Usuários cadastrados</h1>
-              <div className = 'addButtonBox'>
-              <form onSubmit={(event) => this.props.history.push('/adduser')}> 
-                <button type="submit" className='addButton'>Adicione um usuário</button>
+              <div className='addButtonBox'>
+                <form onSubmit={(event) => this.props.history.push('/adduser')}>
+                  <button type="submit" className='addButton'>Adicione um usuário</button>
                 </form>
               </div>
               <div >
                 <ul>
-                  {Object.keys(list).map((i) =>
-                    <li key={list[i].name}>
+                  {result.data.Users.nodes.map((value: { name: string; email: string; id: string; }) =>
+                    <li key={value.name}>
                       <div style={{ padding: 10 }}>
                         <div style={{ outline: 'solid' }}>
-                          <div style={{ backgroundColor: '#e6b3ff' }}> Nome: {list[i].name}</div>
-                          <div>email: {list[i].email}</div>
+                          <div style={{ backgroundColor: '#e6b3ff' }}> Nome: {value.name}</div>
+                          <div>E-mail: {value.email}
+                            <Link to={'/userdetails/' + value.id}>
+                              Details
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </li>

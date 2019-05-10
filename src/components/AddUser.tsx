@@ -1,14 +1,9 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { FormErrors } from './FormErrors';
-import { css } from '@emotion/core';
-import { ClipLoader } from 'react-spinners';
 import { gql } from 'apollo-boost';
 import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
-import override from './Login'
-
-
-
+import Loader from './Loader'
 
 const CREATE_OPERATION = gql`
   mutation CreateOp($email:String!, $password:String!, $name:String!, $role:UserRoleType!, $cpf:String!, $birthDate:String!){
@@ -91,14 +86,7 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
             >
                 {(mutation: MutationFn<any>, result: MutationResult) => {
                     if (result.loading) return (
-                        <div className='sweet-loading' style={{ textAlign: 'center', display: 'block' }}>
-                            <ClipLoader
-                                sizeUnit={"px"}
-                                size={150}
-                                color={'#e6b3ff'}
-                                loading={result.loading}
-                            />
-                        </div>
+                        Loader(result.loading)
                     )
 
                     return (
@@ -120,40 +108,40 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
                                 </div>
 
                                 <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                                    <label htmlFor="password">Senha</label>
+                                    <label >Senha</label>
                                     <input type="password" className="form-control" name="password"
                                         value={this.state.password}
                                         onChange={this.handleUserPassword} />
                                 </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                                    <label htmlFor="password">Nome</label>
-                                    <input  className="form-control" name="name"
+                                <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}>
+                                    <label >Nome</label>
+                                    <input className="form-control" name="name"
                                         value={this.state.name}
                                         onChange={this.handleUserName} />
                                 </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                                    <label htmlFor="password">Role</label>
+                                <div className={`form-group ${this.errorClass(this.state.formErrors.role)}`}>
+                                    <label >Role</label>
                                     <input className="form-control" name="role"
                                         value={this.state.role}
                                         onChange={this.handleUserRole} />
                                 </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                                    <label htmlFor="password">CPF</label>
-                                    <input  className="form-control" name="cpf"
+                                <div className={`form-group ${this.errorClass(this.state.formErrors.cpf)}`}>
+                                    <label >CPF</label>
+                                    <input className="form-control" name="cpf"
                                         value={this.state.cpf}
                                         onChange={this.handleUserCPF} />
                                 </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                                    <label htmlFor="password">Data de nascimento</label>
-                                    <input  className="form-control" name="birth-date"
+                                <div className={`form-group ${this.errorClass(this.state.formErrors.birthDate)}`}>
+                                    <label >Data de nascimento</label>
+                                    <input className="form-control" name="birth-date"
                                         value={this.state.birthDate}
                                         onChange={this.handleUserBirthDate} />
                                 </div>
-                                <button type="submit" >Criar</button>
+                                <button type="submit" disabled={!this.state.formValid}>Criar</button>
                             </form>
                         </>
                     )
@@ -167,7 +155,7 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
     }
 
     private handleUserEmail = (e: any) => {
-        const value = e.target.value;
+        const { value } = e.target;
         this.setState({ email: value }, () => { this.validateField("email", value) });
     }
 
@@ -177,22 +165,22 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
     }
 
     private handleUserPassword = (e: any) => {
-        const value = e.target.value;
+        const { value } = e.target;
         this.setState({ password: value }, () => { this.validateField("password", value) });
     }
 
     private handleUserBirthDate = (e: any) => {
-        const value = e.target.value;
+        const { value } = e.target;
         this.setState({ birthDate: value }, () => { this.validateField("birthDate", value) });
     }
 
     private handleUserRole = (e: any) => {
-        const value = e.target.value;
+        const { value } = e.target;
         this.setState({ role: value }, () => { this.validateField("role", value) });
     }
 
     private handleUserCPF = (e: any) => {
-        const value = e.target.value;
+        const { value } = e.target;
         this.setState({ cpf: value }, () => { this.validateField("cpf", value) });
     }
 
