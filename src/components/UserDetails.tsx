@@ -27,9 +27,6 @@ export interface UserDetailsProps extends RouteComponentProps<{ id: string }> {
 export default class UserDetailsPage extends React.Component<UserDetailsProps> {
   constructor(props: UserDetailsProps) {
     super(props);
-    this.state = {
-
-    }
   }
   render() {
     return (

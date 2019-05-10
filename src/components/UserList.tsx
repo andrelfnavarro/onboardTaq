@@ -53,17 +53,15 @@ export default class UserListPage extends React.Component<UserListPageProps, Use
                 <ul>
                   {result.data.Users.nodes.map((value: { name: string; email: string; id: string; }) =>
                     <li key={value.name}>
-                      <div style={{ padding: 10 }}>
-                        <div style={{ outline: 'solid' }}>
+                      <div style={{ padding: 10, outline: 'solid' }}>
                           <div style={{ backgroundColor: '#e6b3ff' }}> Nome: {value.name}</div>
-                          <div>E-mail: {value.email}
+                          <div >E-mail: {value.email}
                             <Link to={'/userdetails/' + value.id}>
                               Details
                             </Link>
                           </div>
                         </div>
-                      </div>
-                    </li>
+\                    </li>
                   )}
                 </ul>
               </div>

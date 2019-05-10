@@ -76,12 +76,11 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       >
         {(mutation: MutationFn<any>, result: MutationResult) => {
           if (result.loading) return (
-              Loader(result.loading)
+            Loader(result.loading)
           )
-
           return (
             <>
-            
+
               <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
                 <h1>
                   Bem-vindo(a) à Taqtile!
@@ -90,16 +89,16 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                   <FormErrors formErrors={this.state.formErrors} />
                 </div>
                 {result.error && <div style={{ textAlign: 'center', color: 'red' }}>{"Erro!" + result.error.message}</div>}
-
                 <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-                  <label htmlFor="email">E-mail</label>
+                  <label htmlFor="email">email</label>
                   <input type="email" required className="form-control" name="email"
                     value={this.state.email}
                     onChange={this.handleUserEmail} />
                 </div>
 
+
                 <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                  <label htmlFor="password">Senha</label>
+                  <label htmlFor="password">senha</label>
                   <input type="password" className="form-control" name="password"
                     value={this.state.password}
                     onChange={this.handleUserPassword} />
