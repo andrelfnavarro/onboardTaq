@@ -49,7 +49,7 @@ export default class UserDetailsPage extends React.Component<RouteComponentProps
                   <div>Data de nascimento: {user.birthDate}</div>
                 </div>
               </div>
-              <div className='addButtonBox'>
+              <div>
                 <form onSubmit={(event) => this.props.history.push('/users')}>
                   <button type="submit" className='addButton'>Voltar</button>
                 </form>
