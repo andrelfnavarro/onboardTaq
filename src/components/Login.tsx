@@ -50,8 +50,8 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     super(props);
     this.state = {
       token: "",
-      email: 'admin@taqtile.com',
-      password: '1234qwer',
+      email: '',
+      password: '',
       formErrors: { email: '', password: '' },
       emailValid: false,
       passwordValid: false,
@@ -138,7 +138,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
         break;
       case 'password':
         passwordValid = value.match(/^((?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,})$/i);
-        fieldValidationErrors.password = passwordValid ? '' : 'inválida. Deve conter mais de 7 caracteres (um número e uma letra)';
+        fieldValidationErrors.password = passwordValid ? '' : 'inválida!';
         break;
       default:
         break;
