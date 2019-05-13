@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/styled-components": "^4.1.14",
     "apollo-boost": "^0.3.1",
     "apollo-link-context": "^1.0.17",
     "graphql": "^14.3.0",

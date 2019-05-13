@@ -3,18 +3,11 @@ import React from 'react';
 import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
 import { FormErrors } from './FormErrors';
-import "./Login.css";
 import { RouteComponentProps } from 'react-router-dom';
 import { css } from '@emotion/core';
 import Loader from './Loader'
-
-export const override: any = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-    display:block;
-    margin: 0 auto;
-`;
+import { Title, Button, Label, Input, Wrapper, Logo } from '../styles/Taqstyles'
+import logo from '../styles/taqtile.png'
 
 const LOGIN_OPERATION = gql`
   mutation LoginOp($email:String!, $password:String!){
@@ -30,7 +23,6 @@ const LOGIN_OPERATION = gql`
     }
   }
   `
-
 
 export interface LoginPageProps extends RouteComponentProps {
 }
@@ -66,49 +58,68 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     } = this.state;
 
     return (
-      <Mutation
-        mutation={LOGIN_OPERATION}
-        variables={{
-          email,
-          password,
-        }}
-        onCompleted={this.handleLoginSuccess}
-      >
-        {(mutation: MutationFn<any>, result: MutationResult) => {
-          if (result.loading) return (
-            Loader(result.loading)
-          )
-          return (
-            <>
+      <Wrapper>
+        <Mutation
+          mutation={LOGIN_OPERATION}
+          variables={{
+            email,
+            password,
+          }}
+          onCompleted={this.handleLoginSuccess}
+        >
+          {(mutation: MutationFn<any>, result: MutationResult) => {
+            if (result.loading) return (
+              Loader(result.loading)
+            )
+            return (
+              <>
+                <form className="Login" onSubmit={(event) => this.submit(mutation, event)}
+                  style={{ textAlign: "center" }}>
+                  <Logo src={logo} alt="Logo" />
+                  <Title>
+                    Bem-vindo(a) à Taqtile!
+                </Title>
+                  {result.error &&
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        color: 'red'
+                      }}>
+                      {"Erro!" + result.error.message}</div>}
+                  <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
+                    <div
+                      style={{ textAlign: "left" }}
+                      className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
+                      <Label htmlFor="email">email: </Label>
+                    </div>
+                    <div>
+                      <Input type="email" required className="form-control" name="email"
+                        value={this.state.email}
+                        onChange={this.handleUserEmail} />
+                    </div>
 
-              <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
-                <h1>
-                  Bem-vindo(a) à Taqtile!
-              </h1>
-                <div className="panel panel-default">
-                  <FormErrors formErrors={this.state.formErrors} />
-                </div>
-                {result.error && <div style={{ textAlign: 'center', color: 'red' }}>{"Erro!" + result.error.message}</div>}
-                <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-                  <label htmlFor="email">email</label>
-                  <input type="email" required className="form-control" name="email"
-                    value={this.state.email}
-                    onChange={this.handleUserEmail} />
-                </div>
-
-
-                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                  <label htmlFor="password">senha</label>
-                  <input type="password" className="form-control" name="password"
-                    value={this.state.password}
-                    onChange={this.handleUserPassword} />
-                </div>
-                <button type="submit" disabled={!this.state.formValid} >Entrar</button>
-              </form>
-            </>
-          )
-        }}
-      </Mutation>
+                    <div
+                      style={{ textAlign: "left" }}
+                      className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
+                      <Label htmlFor="password">senha: </Label>
+                      </div>
+                      <div>
+                        <Input type="password" className="form-control" name="password"
+                          value={this.state.password}
+                          onChange={this.handleUserPassword} />
+                      </div>
+                  </div>
+                  <div className="panel panel-default">
+                    <FormErrors formErrors={this.state.formErrors} />
+                  </div>
+                  <Button 
+                  type="submit" disabled={!this.state.formValid} >Entrar</Button>
+                </form>
+              </>
+            )
+          }}
+        </Mutation>
+      </Wrapper>
     );
   }
 

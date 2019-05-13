@@ -1,9 +1,10 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query, QueryResult, QueryProps, OperationVariables } from 'react-apollo';
-import './UserList.css'
+import { Query, QueryResult } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
 import Loader from './Loader'
+import { Button, Title, StripedListLine } from '../styles/Taqstyles'
+
 
 const USER_DATA = gql`
 query UserDetails($id:Int!){
@@ -38,26 +39,28 @@ export default class UserDetailsPage extends React.Component<RouteComponentProps
           let user = result.data.User
           return (
             <div>
-              <h1 style={{ textAlign: 'center' }}> Dados de {user.name}</h1>
+              <Title> Dados de {user.name}</Title>
               <div >
                 <div style={{ padding: 10, outline: 'solid' }} >
-                  <div style={{ backgroundColor: '#e6b3ff' }}> Nome: {user.name}</div>
+                  <StripedListLine> Nome: {user.name}</StripedListLine>
                   <div>E-mail: {user.email}</div>
-                  <div style={{ backgroundColor: '#e6b3ff' }}>Role: {user.role}</div>
+                  <StripedListLine>Role: {user.role}</StripedListLine>
                   <div>ID: {user.id}</div>
-                  <div style={{ backgroundColor: '#e6b3ff' }}>CPF: {user.cpf}</div>
-                  <div>Data de nascimento: {user.birthDate}</div>
+                  <StripedListLine>CPF: {user.cpf}</StripedListLine>
+                  <div>Data de nascimento: {(user.birthDate)}</div>
                 </div>
               </div>
               <div>
-                <form onSubmit={(event) => this.props.history.push('/users')}>
-                  <button type="submit" className='addButton'>Voltar</button>
+                <form
+                  style={{ textAlign: "center" }}
+                  onSubmit={(event) => this.props.history.push('/users')}>
+                  <Button type="submit">Voltar</Button>
                 </form>
               </div>
             </div>
           )
         }
-      }</Query>
+        }</Query>
     )
   }
 }

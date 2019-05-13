@@ -4,6 +4,8 @@ import { FormErrors } from './FormErrors';
 import { gql } from 'apollo-boost';
 import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
 import Loader from './Loader'
+import { Button, Input, Label, Title } from '../styles/Taqstyles'
+
 
 const CREATE_OPERATION = gql`
   mutation CreateOp($email:String!, $password:String!, $name:String!, $role:UserRoleType!, $cpf:String!, $birthDate:String!){
@@ -93,73 +95,75 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
                     return (
                         <>
                             <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
-                                <h1>
+                                <Title>
                                     Preencha os dados do novo usuário
-                                </h1>
-                                <div className="panel panel-default">
-                                    <FormErrors formErrors={this.state.formErrors} />
-                                </div>
+                                </Title>
                                 {result.error && <div style={{ textAlign: 'center', color: 'red' }}>{"Erro!" + result.error.message}</div>}
-
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}
-                                >
-                                    <label htmlFor="email">E-mail</label>
-                                    <input type="email" required className="form-control" name="email"
-                                        value={this.state.email}
-                                        onChange={this.handleUserEmail} />
-                                </div>
-
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                                    <label >Senha</label>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        name="password"
-                                        value={this.state.password}
-                                        onChange={this.handleUserPassword} /
+                                <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
+                                    <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}
                                     >
-                                </div>
+                                        <Label htmlFor="email">E-mail: </Label>
+                                        <Input type="email" required className="form-control" name="email"
+                                            value={this.state.email}
+                                            onChange={this.handleUserEmail} />
+                                    </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}
-                                >
-                                    <label >Nome</label>
-                                    <input
-                                        className="form-control"
-                                        name="name"
-                                        value={this.state.name}
-                                        onChange={this.handleUserName} />
-                                </div>
+                                    <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
+                                        <Label >Senha: </Label>
+                                        <Input
+                                            type="password"
+                                            className="form-control"
+                                            name="password"
+                                            value={this.state.password}
+                                            onChange={this.handleUserPassword} /
+                                        >
+                                    </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.role)}`}>
-                                    <label >Role</label>
-                                    <input
-                                        className="form-control"
-                                        name="role"
-                                        value={this.state.role}
-                                        onChange={this.handleUserRole} />
-                                </div>
+                                    <div className={`form-group ${this.errorClass(this.state.formErrors.name)}`}
+                                    >
+                                        <Label >Nome: </Label>
+                                        <Input
+                                            className="form-control"
+                                            name="name"
+                                            value={this.state.name}
+                                            onChange={this.handleUserName} />
+                                    </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.cpf)}`}>
-                                    <label >CPF</label>
-                                    <input
-                                        className="form-control"
-                                        name="cpf"
-                                        value={this.state.cpf}
-                                        onChange={this.handleUserCPF} />
-                                </div>
+                                    <div className={`form-group ${this.errorClass(this.state.formErrors.role)}`}>
+                                        <Label >Role: </Label>
+                                        <Input
+                                            className="form-control"
+                                            name="role"
+                                            value={this.state.role}
+                                            onChange={this.handleUserRole} />
+                                    </div>
 
-                                <div className={`form-group ${this.errorClass(this.state.formErrors.birthDate)}`}>
-                                    <label >Data de nascimento</label>
-                                    <input
-                                        className="form-control"
-                                        name="birth-date"
-                                        value={this.state.birthDate}
-                                        onChange={this.handleUserBirthDate} />
+                                    <div className={`form-group ${this.errorClass(this.state.formErrors.cpf)}`}>
+                                        <Label >CPF: </Label>
+                                        <Input
+                                            className="form-control"
+                                            name="cpf"
+                                            value={this.state.cpf}
+                                            onChange={this.handleUserCPF} />
+                                    </div>
+
+                                    <div className={`form-group ${this.errorClass(this.state.formErrors.birthDate)}`}>
+                                        <Label >Data de nascimento: </Label>
+                                        <Input
+                                            className="form-control"
+                                            name="birth-date"
+                                            value={this.state.birthDate}
+                                            onChange={this.handleUserBirthDate} />
+                                    </div>
                                 </div>
-                                <button type="submit"
-                                    disabled={!this.state.formValid}>
-                                    Criar
-                                </button>
+                                <div style = {{textAlign:"center"}} className="panel panel-default">
+                                    <FormErrors formErrors={this.state.formErrors} />
+                                    <Button
+                                        type="submit"
+                                        disabled={!this.state.formValid}>
+                                        Criar
+                                    </Button>
+                                </div>
                             </form>
                         </>
                     )
