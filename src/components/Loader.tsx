@@ -1,8 +1,6 @@
 import { ClipLoader } from 'react-spinners';
 import React from 'react';
 
-
-
 export default function Loader (loading:boolean){
     return (
         <div className='sweet-loading' style={{ textAlign: 'center', display: 'block' }}>
