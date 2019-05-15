@@ -56,12 +56,12 @@ export default class AddUser extends React.Component<AddUserProps> {
                   {"Erro!" + result.error.message}</div>}
 
                 <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
-                  <Form type="email" setFieldValue={this.setFieldValue}></Form>
-                  <Form type="password" setFieldValue={this.setFieldValue}></Form>
-                  <Form type="name" setFieldValue={this.setFieldValue}></Form>
-                  <Form type="role" setFieldValue={this.setFieldValue}></Form>
-                  <Form type="cpf" setFieldValue={this.setFieldValue}></Form>
-                  <Form type="birthDate" setFieldValue={this.setFieldValue}></Form>
+                  <Form type="email" setVariables={this.setVariables}></Form>
+                  <Form type="password" setVariables={this.setVariables}></Form>
+                  <Form type="name" setVariables={this.setVariables}></Form>
+                  <Form type="role" setVariables={this.setVariables}></Form>
+                  <Form type="cpf" setVariables={this.setVariables}></Form>
+                  <Form type="birthDate" setVariables={this.setVariables}></Form>
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <CustomButton type="submit" title="Criar" />
@@ -90,7 +90,7 @@ export default class AddUser extends React.Component<AddUserProps> {
     }
   }
 
-  private setFieldValue = (value: string, type: string, valid: boolean) => {
+  private setVariables = (value: string, type: string, valid: boolean) => {
     switch (type) {
       case 'email':
         if (valid) this.validFields.email = value
