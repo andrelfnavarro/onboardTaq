@@ -2,8 +2,9 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
-import Loader from './Loader'
-import { Button, Title, StripedListLine } from '../styles/Taqstyles'
+import { CustomLoader } from './Loader'
+import { Title, StripedListLine } from '../styles/Taqstyles'
+import { CustomButton } from './Button';
 
 
 const USER_DATA = gql`
@@ -15,7 +16,7 @@ query UserDetails($id:Int!){
       cpf
       role
       email
-      
+
     }
   }
   `
@@ -32,9 +33,7 @@ export default class UserDetailsPage extends React.Component<RouteComponentProps
         variables={{
           id: this.props.match.params.id
         }}>{(result: QueryResult) => {
-          if (result.loading) return (
-            Loader(result.loading)
-          )
+          if (result.loading) return <CustomLoader loading={result.loading}></CustomLoader>
           if (result.error) return <h1>{"Erro!" + result.error.message}</h1>
           let user = result.data.User
           return (
@@ -54,7 +53,7 @@ export default class UserDetailsPage extends React.Component<RouteComponentProps
                 <form
                   style={{ textAlign: "center" }}
                   onSubmit={(event) => this.props.history.push('/users')}>
-                  <Button type="submit">Voltar</Button>
+                  <CustomButton type="submit" title="Voltar" enabled />
                 </form>
               </div>
             </div>

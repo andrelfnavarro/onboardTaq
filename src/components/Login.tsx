@@ -2,16 +2,16 @@ import { gql } from 'apollo-boost';
 import React from 'react';
 import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
-import { FormErrors } from './FormErrors';
 import { RouteComponentProps } from 'react-router-dom';
-import { css } from '@emotion/core';
-import Loader from './Loader'
-import { Title, Button, Label, Input, Wrapper, Logo } from '../styles/Taqstyles'
+import { CustomLoader } from './Loader'
+import { Title, Wrapper, Logo, ErrorStyled } from '../styles/Taqstyles'
 import logo from '../styles/taqtile.png'
+import  { CustomButton } from './Button'
+import Form from './Form'
 
 const LOGIN_OPERATION = gql`
   mutation LoginOp($email:String!, $password:String!){
-    Login(data: { 
+    Login(data: {
       email: $email
       password: $password
     }) {
@@ -35,6 +35,7 @@ export interface LoginPageState {
   password: string;
   formValid: boolean;
   token: string;
+  valid:any
 }
 
 export default class LoginPage extends React.Component<LoginPageProps, LoginPageState>{
@@ -47,7 +48,8 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       formErrors: { email: '', password: '' },
       emailValid: false,
       passwordValid: false,
-      formValid: false
+      formValid: false,
+      valid: [false,false]
     }
   }
 
@@ -68,9 +70,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
           onCompleted={this.handleLoginSuccess}
         >
           {(mutation: MutationFn<any>, result: MutationResult) => {
-            if (result.loading) return (
-              Loader(result.loading)
-            )
+            if (result.loading) return <CustomLoader loading={result.loading}></CustomLoader>
             return (
               <>
                 <form className="Login" onSubmit={(event) => this.submit(mutation, event)}
@@ -78,42 +78,20 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                   <Logo src={logo} alt="Logo" />
                   <Title>
                     Bem-vindo(a) à Taqtile!
-                </Title>
+                  </Title>
                   {result.error &&
-                    <div
-                      style={{
-                        textAlign: 'center',
-                        color: 'red'
-                      }}>
-                      {"Erro!" + result.error.message}</div>}
+                  <ErrorStyled>
+                      {"Erro!" + result.error.message}
+                  </ErrorStyled>}
                   <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
-                    <div
-                      style={{ textAlign: "left" }}
-                      className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-                      <Label htmlFor="email">email: </Label>
-                    </div>
-                    <div>
-                      <Input type="email" required className="form-control" name="email"
-                        value={this.state.email}
-                        onChange={this.handleUserEmail} />
-                    </div>
-
-                    <div
-                      style={{ textAlign: "left" }}
-                      className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-                      <Label htmlFor="password">senha: </Label>
-                      </div>
-                      <div>
-                        <Input type="password" className="form-control" name="password"
-                          value={this.state.password}
-                          onChange={this.handleUserPassword} />
-                      </div>
+                    <Form type="email" setFieldValue={this.setFieldValue}></Form>
+                    <Form type="password" setFieldValue={this.setFieldValue}></Form>
                   </div>
-                  <div className="panel panel-default">
-                    <FormErrors formErrors={this.state.formErrors} />
-                  </div>
-                  <Button 
-                  type="submit" disabled={!this.state.formValid} >Entrar</Button>
+                  <CustomButton type="submit" title="Entrar" enabled =
+                  {this.state.valid[0] &&
+                    this.state.valid[1] &&
+                    this.state.valid[2]
+                  } />
                 </form>
               </>
             )
@@ -128,47 +106,6 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     this.props.history.push('/users');
   }
 
-  private handleUserEmail = (e: any) => {
-    const value = e.target.value;
-    this.setState({ email: value }, () => { this.validateField("email", value) });
-  }
-
-  private handleUserPassword = (e: any) => {
-    const { value } = e.target;
-    this.setState({ password: value }, () => { this.validateField("password", value) })
-  }
-
-  private validateField(fieldName: string, value: any) {
-    let fieldValidationErrors = this.state.formErrors;
-    let { emailValid, passwordValid } = this.state;
-
-    switch (fieldName) {
-      case 'email':
-        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.email = emailValid ? '' : ' inválido!';
-        break;
-      case 'password':
-        passwordValid = value.match(/^((?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,})$/i);
-        fieldValidationErrors.password = passwordValid ? '' : 'inválida!';
-        break;
-      default:
-        break;
-    }
-
-    this.setState({
-      formErrors: fieldValidationErrors,
-      emailValid: emailValid,
-      passwordValid: passwordValid
-    }, this.validateForm);
-  }
-
-  private validateForm() {
-    this.setState({ formValid: this.state.emailValid && this.state.passwordValid });
-  }
-
-  private errorClass(error: any) {
-    return (error.length === 0 ? '' : 'has-error');
-  }
   private submit = (mutationFn: MutationFn, event: React.FormEvent) => {
     event.preventDefault()
     const {
@@ -187,6 +124,22 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
 
   private saveUserData = (token: string) => {
     localStorage.setItem(AUTH_TOKEN, token)
+  }
+
+  private setFieldValue = (value: string, type: string, valid:boolean) => {
+    switch (type) {
+      case 'email':
+        this.setState({ email: value })
+        if(valid) this.state.valid[0] = valid
+        break;
+      case 'password':
+        this.setState({ password: value })
+        if(valid) this.state.valid[1] = valid
+        break;
+
+      default:
+        break;
+    }
   }
 }
 

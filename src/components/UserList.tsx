@@ -2,8 +2,9 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import Loader from './Loader'
-import { Button, Title, StripedListLine } from '../styles/Taqstyles'
+import {CustomLoader} from './Loader'
+import {Title, StripedListLine } from '../styles/Taqstyles'
+import { CustomButton } from './Button';
 
 const USERS_FETCH = gql`
 query UserList{
@@ -20,8 +21,6 @@ export interface UserListPageProps extends RouteComponentProps {
 }
 
 export interface UserListPageState {
-  currentPage: number,
-  usersPerPage: number
 }
 
 
@@ -38,9 +37,7 @@ export default class UserListPage extends React.Component<UserListPageProps, Use
     return (
       <Query
         query={USERS_FETCH}>{(result: QueryResult) => {
-          if (result.loading) return (
-            Loader(result.loading)
-          )
+          if (result.loading) return <CustomLoader loading={result.loading}></CustomLoader>
           if (result.error) return <h1>Erro!</h1>
           return (
             <div>
@@ -48,7 +45,7 @@ export default class UserListPage extends React.Component<UserListPageProps, Use
               <div
                 style={{ textAlign: "center" }}>
                 <form onSubmit={(event) => this.props.history.push('/adduser')}>
-                  <Button type="submit" className='addButton'>Adicione um usuário</Button>
+                <CustomButton type="submit" title="Adicionar usuário" enabled />
                 </form>
               </div>
               <div >
