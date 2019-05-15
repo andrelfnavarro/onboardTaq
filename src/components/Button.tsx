@@ -1,12 +1,6 @@
 import React from 'react';
 import { ButtonStyled } from '../styles/Taqstyles'
 
-// export default function ButtonComponent (type:string, title:string, enabled:boolean = true) {
-//     return (
-//       <Button type="submit" disabled ={!enabled}>{title}</Button>
-//     )
-// }
-
 export interface ButtonProps {
   type: string;
   title: string;

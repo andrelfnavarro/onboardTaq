@@ -4,7 +4,7 @@ import { FormErrors } from './FormErrors';
 
 export interface FormProps {
   type: string;
-  setFieldValue:(value:string, type:string, valid:boolean) => (void)
+  setFieldValue: (value: string, type: string, valid: boolean) => (void)
 }
 
 export interface FormState {
@@ -26,8 +26,8 @@ export default class Form extends React.Component<FormProps, FormState> {
     const type = this.props.type;
     return (
       <>
-        <div style={{textAlign:"left"}}>
-        <Label>{this.decideLabel(type)}</Label>
+        <div style={{ textAlign: "left" }}>
+          <Label>{this.decideLabel(type)}</Label>
         </div>
         <InputStyled
           name={type}
@@ -35,12 +35,12 @@ export default class Form extends React.Component<FormProps, FormState> {
           valid={this.state.valid}
           onBlur={event => this.validateField(type, event.target.value)}
         />
-          <FormErrors formErrors={this.state.formErrors} />
+        <FormErrors formErrors={this.state.formErrors} />
       </>
     )
   }
 
-   private decideLabel = (type: string) => {
+  private decideLabel = (type: string) => {
     let labelString: string = '';
     switch (type) {
       case 'email':
@@ -72,9 +72,9 @@ export default class Form extends React.Component<FormProps, FormState> {
     this.setState({ content: value })
   }
 
-  private validateContent = (e: any, type:string) => {
+  private validateContent = (e: any, type: string) => {
     this.validateField(type, this.state.content)
-    }
+  }
 
   private validateField(fieldName: string, value: any) {
     let fieldFormErrors = this.state.formErrors;

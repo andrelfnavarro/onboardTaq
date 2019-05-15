@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { CustomLoader } from './Loader'
 import { Title, Wrapper, Logo, ErrorStyled } from '../styles/Taqstyles'
 import logo from '../styles/taqtile.png'
-import  { CustomButton } from './Button'
+import { CustomButton } from './Button'
 import Form from './Form'
 
 const LOGIN_OPERATION = gql`
@@ -35,7 +35,7 @@ export interface LoginPageState {
   password: string;
   formValid: boolean;
   token: string;
-  valid:any
+  valid: any
 }
 
 export default class LoginPage extends React.Component<LoginPageProps, LoginPageState>{
@@ -49,7 +49,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       emailValid: false,
       passwordValid: false,
       formValid: false,
-      valid: [false,false]
+      valid: [false, false]
     }
   }
 
@@ -80,18 +80,18 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                     Bem-vindo(a) à Taqtile!
                   </Title>
                   {result.error &&
-                  <ErrorStyled>
+                    <ErrorStyled style={{ textAlign: 'center' }}>
                       {"Erro!" + result.error.message}
-                  </ErrorStyled>}
+                    </ErrorStyled>}
                   <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
                     <Form type="email" setFieldValue={this.setFieldValue}></Form>
                     <Form type="password" setFieldValue={this.setFieldValue}></Form>
                   </div>
-                  <CustomButton type="submit" title="Entrar" enabled =
-                  {this.state.valid[0] &&
-                    this.state.valid[1] &&
-                    this.state.valid[2]
-                  } />
+                  <CustomButton type="submit" title="Entrar" enabled=
+                    {this.state.valid[0] &&
+                      this.state.valid[1] &&
+                      this.state.valid[2]
+                    } />
                 </form>
               </>
             )
@@ -126,15 +126,15 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     localStorage.setItem(AUTH_TOKEN, token)
   }
 
-  private setFieldValue = (value: string, type: string, valid:boolean) => {
+  private setFieldValue = (value: string, type: string, valid: boolean) => {
     switch (type) {
       case 'email':
         this.setState({ email: value })
-        if(valid) this.state.valid[0] = valid
+        if (valid) this.state.valid[0] = valid
         break;
       case 'password':
         this.setState({ password: value })
-        if(valid) this.state.valid[1] = valid
+        if (valid) this.state.valid[1] = valid
         break;
 
       default:
