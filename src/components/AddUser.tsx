@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
 import { CustomLoader } from './Loader'
-import { H1 } from '../styles/Taqstyles'
+import { H1, SideMarginStyled } from '../styles/Taqstyles'
 import { CustomButton } from './Button';
 import Form from './Form'
 
@@ -54,15 +54,14 @@ export default class AddUser extends React.Component<AddUserProps> {
                 </H1>
                 {result.error && <div style={{ textAlign: 'center', color: 'red' }}>
                   {"Erro!" + result.error.message}</div>}
-
-                <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
+                <SideMarginStyled>
                   <Form type="email" setVariables={this.setVariables}></Form>
                   <Form type="password" setVariables={this.setVariables}></Form>
                   <Form type="name" setVariables={this.setVariables}></Form>
                   <Form type="role" setVariables={this.setVariables}></Form>
                   <Form type="cpf" setVariables={this.setVariables}></Form>
                   <Form type="birthDate" setVariables={this.setVariables}></Form>
-                </div>
+                </SideMarginStyled>
                 <div style={{ textAlign: "center" }}>
                   <CustomButton type="submit" title="Criar" />
                 </div>
