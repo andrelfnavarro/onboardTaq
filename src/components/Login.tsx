@@ -4,7 +4,7 @@ import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
 import { AUTH_TOKEN } from '../constants';
 import { RouteComponentProps } from 'react-router-dom';
 import { CustomLoader } from './Loader'
-import { Title, Wrapper, Logo, ErrorStyled } from '../styles/Taqstyles'
+import { H1, Wrapper, Logo, ErrorStyled, SideMarginStyled } from '../styles/Taqstyles'
 import logo from '../styles/taqtile.png'
 import { CustomButton } from './Button'
 import Form from './Form'
@@ -33,7 +33,6 @@ export interface LoginPageState {
   formErrors: any;
   email: string;
   password: string;
-  formValid: boolean;
   token: string;
   valid: any
 }
@@ -48,7 +47,6 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       formErrors: { email: '', password: '' },
       emailValid: false,
       passwordValid: false,
-      formValid: false,
       valid: [false, false]
     }
   }
@@ -76,22 +74,19 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                 <form className="Login" onSubmit={(event) => this.submit(mutation, event)}
                   style={{ textAlign: "center" }}>
                   <Logo src={logo} alt="Logo" />
-                  <Title>
+                  <H1>
                     Bem-vindo(a) à Taqtile!
-                  </Title>
+                  </H1>
                   {result.error &&
                     <ErrorStyled style={{ textAlign: 'center' }}>
                       {"Erro!" + result.error.message}
                     </ErrorStyled>}
-                  <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
+                  <SideMarginStyled>
                     <Form type="email" setFieldValue={this.setFieldValue}></Form>
                     <Form type="password" setFieldValue={this.setFieldValue}></Form>
-                  </div>
+                  </SideMarginStyled  >
                   <CustomButton type="submit" title="Entrar" enabled=
-                    {this.state.valid[0] &&
-                      this.state.valid[1] &&
-                      this.state.valid[2]
-                    } />
+                    {this.state.valid.every(this.isValid)}/>
                 </form>
               </>
             )
@@ -99,6 +94,10 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
         </Mutation>
       </Wrapper>
     );
+  }
+
+  private isValid = (element:boolean, index:number, valid:[]) => {
+    return element
   }
 
   private handleLoginSuccess = (data: any) => {

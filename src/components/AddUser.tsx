@@ -3,10 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { Mutation, MutationFn, MutationResult, } from 'react-apollo';
 import { CustomLoader } from './Loader'
-import { Title } from '../styles/Taqstyles'
+import { H1 } from '../styles/Taqstyles'
 import { CustomButton } from './Button';
 import Form from './Form'
-
 
 const CREATE_OPERATION = gql`
   mutation CreateOp($email:String!, $password:String!, $name:String!, $role:UserRoleType!, $cpf:String!, $birthDate:String!){
@@ -24,55 +23,25 @@ const CREATE_OPERATION = gql`
   }
   `
 
-
 export interface AddUserProps extends RouteComponentProps {
 }
 
-export interface AddUserState {
-  email: string;
-  password: string;
-  role: string;
-  name: string;
-  cpf: string;
-  birthDate: string;
-  valid:any
-}
+export default class AddUser extends React.Component<AddUserProps> {
 
-export default class AddUser extends React.Component<AddUserProps, AddUserState> {
-
-  constructor(props: AddUserProps) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      cpf: '',
-      role: '',
-      birthDate: '',
-      name: '',
-      valid : [false,false,false,false,false,false]
-    }
+  private validFields = {
+    email: '',
+    password: '',
+    cpf: '',
+    role: '',
+    birthDate: '',
+    name: ''
   }
 
   render() {
-    const {
-      email,
-      name,
-      password,
-      role,
-      cpf,
-      birthDate
-    } = this.state;
     return (
       <Mutation
         mutation={CREATE_OPERATION}
-        variables={{
-          email,
-          name,
-          password,
-          role,
-          cpf,
-          birthDate
-        }}
+        variables={this.validFields}
         onCompleted={this.handleCreateSuccess}
       >
         {(mutation: MutationFn<any>, result: MutationResult) => {
@@ -80,41 +49,22 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
           return (
             <>
               <form className="Login" onSubmit={(event) => this.submit(mutation, event)}>
-                <Title>
+                <H1>
                   Preencha os dados do novo usuário
-                </Title>
+                </H1>
                 {result.error && <div style={{ textAlign: 'center', color: 'red' }}>
                   {"Erro!" + result.error.message}</div>}
 
                 <div style={{ marginLeft: '45.5%', marginRight: '46%' }}>
-                  <div>
-                    <Form type="email" setFieldValue={this.setFieldValue}></Form>
-                  </div>
-                  <div>
-                    <Form type="password" setFieldValue={this.setFieldValue}></Form>
-                  </div>
-                  <div>
-                    <Form type="name" setFieldValue={this.setFieldValue}></Form>
-                  </div>
-                  <div>
-                    <Form type="role" setFieldValue={this.setFieldValue}></Form>
-                  </div>
-                  <div>
-                    <Form type="cpf" setFieldValue={this.setFieldValue}></Form>
-                  </div>
-                  <div>
-                    <Form type="birthDate" setFieldValue={this.setFieldValue}></Form>
-                  </div>
+                  <Form type="email" setFieldValue={this.setFieldValue}></Form>
+                  <Form type="password" setFieldValue={this.setFieldValue}></Form>
+                  <Form type="name" setFieldValue={this.setFieldValue}></Form>
+                  <Form type="role" setFieldValue={this.setFieldValue}></Form>
+                  <Form type="cpf" setFieldValue={this.setFieldValue}></Form>
+                  <Form type="birthDate" setFieldValue={this.setFieldValue}></Form>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <CustomButton type="submit" title="Criar" enabled =
-                  {this.state.valid[0] &&
-                    this.state.valid[1] &&
-                    this.state.valid[2] &&
-                    this.state.valid[3] &&
-                    this.state.valid[4] &&
-                    this.state.valid[5]
-                  } />
+                  <CustomButton type="submit" title="Criar" />
                 </div>
               </form>
             </>
@@ -128,59 +78,41 @@ export default class AddUser extends React.Component<AddUserProps, AddUserState>
     this.props.history.push('/users');
   }
   private submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
-    event.preventDefault()
-    const {
-      email,
-      name,
-      password,
-      role,
-      cpf,
-      birthDate
-    } = this.state;
+    const isFormValid: boolean = !!this.validFields.email &&
+      !!this.validFields.name &&
+      !!this.validFields.cpf &&
+      !!this.validFields.role &&
+      !!this.validFields.birthDate &&
+      !!this.validFields.password;
 
-    mutationFn({
-      variables: {
-        email,
-        password,
-        name,
-        role,
-        cpf,
-        birthDate
-      }
-    });
-
+    if (isFormValid) {
+      mutationFn({ variables: this.validFields });
+    }
   }
 
-  private setFieldValue = (value: string, type: string, valid:boolean) => {
+  private setFieldValue = (value: string, type: string, valid: boolean) => {
     switch (type) {
       case 'email':
-        this.setState({ email: value })
-        if(valid) this.state.valid[0] = valid
+        if (valid) this.validFields.email = value
         break;
       case 'name':
-        this.setState({ name: value })
-        if(valid) this.state.valid[1] = valid
+        if (valid) this.validFields.name = value
         break;
       case 'password':
-        this.setState({ password: value })
-        if(valid) this.state.valid[2] = valid
+        if (valid) this.validFields.password = value
         break;
       case 'cpf':
-        this.setState({ cpf: value })
-        if(valid) this.state.valid[3] = valid
+        if (valid) this.validFields.cpf = value
         break;
       case 'birthDate':
-        this.setState({ birthDate: value })
-        if(valid) this.state.valid[4] = valid
+        if (valid) this.validFields.birthDate = value
         break;
       case 'role':
-        this.setState({ role: value })
-        if(valid) this.state.valid[5] = valid
+        if (valid) this.validFields.role = value
         break;
       default:
         break;
     }
   }
-
 }
 

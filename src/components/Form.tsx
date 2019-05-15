@@ -14,6 +14,10 @@ export interface FormState {
 }
 
 export default class Form extends React.Component<FormProps, FormState> {
+  // private validator: (value: string) => boolean;
+  // private label: string;
+  // private caption: string;
+
   constructor(props: FormProps) {
     super(props);
     this.state = {
@@ -22,8 +26,10 @@ export default class Form extends React.Component<FormProps, FormState> {
       formErrors: { content: '' },
     }
   }
+
   render() {
     const type = this.props.type;
+
     return (
       <>
         <div style={{ textAlign: "left" }}>
@@ -33,7 +39,7 @@ export default class Form extends React.Component<FormProps, FormState> {
           name={type}
           type={type}
           valid={this.state.valid}
-          onBlur={event => this.validateField(type, event.target.value)}
+          onBlur={this.handleInputBlur}
         />
         <FormErrors formErrors={this.state.formErrors} />
       </>
@@ -67,13 +73,8 @@ export default class Form extends React.Component<FormProps, FormState> {
     return labelString;
   }
 
-  private updateContent = (e: any) => {
-    const { value } = e.target;
-    this.setState({ content: value })
-  }
-
-  private validateContent = (e: any, type: string) => {
-    this.validateField(type, this.state.content)
+  private handleInputBlur = (event : any) => {
+    this.validateField(this.props.type, event.target.value);
   }
 
   private validateField(fieldName: string, value: any) {
@@ -113,19 +114,14 @@ export default class Form extends React.Component<FormProps, FormState> {
         break;
       default:
         break;
-
     }
 
     this.setState({
       formErrors: fieldFormErrors,
       valid: valid
-    }, this.validateForm);
-  }
-
-  private validateForm() {
-    this.setState({
-      valid: this.state.valid
     });
   }
+
+
 }
 

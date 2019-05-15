@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import {CustomLoader} from './Loader'
-import {Title, StripedListLine } from '../styles/Taqstyles'
+import {H1, StripedListLine } from '../styles/Taqstyles'
 import { CustomButton } from './Button';
 
 const USERS_FETCH = gql`
@@ -41,7 +41,7 @@ export default class UserListPage extends React.Component<UserListPageProps, Use
           if (result.error) return <h1>Erro!</h1>
           return (
             <div>
-              <Title style={{ textAlign: 'center' }}> Usuários cadastrados</Title>
+              <H1 style={{ textAlign: 'center' }}> Usuários cadastrados</H1>
               <div
                 style={{ textAlign: "center" }}>
                 <form onSubmit={(event) => this.props.history.push('/adduser')}>

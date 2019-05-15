@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
 import { CustomLoader } from './Loader'
-import { Title, StripedListLine } from '../styles/Taqstyles'
+import { H1, StripedListLine } from '../styles/Taqstyles'
 import { CustomButton } from './Button';
 
 
@@ -38,7 +38,7 @@ export default class UserDetailsPage extends React.Component<RouteComponentProps
           let user = result.data.User
           return (
             <div>
-              <Title> Dados de {user.name}</Title>
+              <H1> Dados de {user.name}</H1>
               <div >
                 <div style={{ padding: 10, outline: 'solid' }} >
                   <StripedListLine> Nome: {user.name}</StripedListLine>

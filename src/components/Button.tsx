@@ -4,7 +4,7 @@ import { ButtonStyled } from '../styles/Taqstyles'
 export interface ButtonProps {
   type: string;
   title: string;
-  enabled: boolean;
+  enabled?: boolean;
 }
 
 export const CustomButton: React.SFC<ButtonProps> = props => (
@@ -19,5 +19,3 @@ export const CustomButton: React.SFC<ButtonProps> = props => (
 CustomButton.defaultProps = {
   enabled: true,
 }
-
-export default CustomButton
