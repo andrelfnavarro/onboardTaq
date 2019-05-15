@@ -78,8 +78,8 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                       {"Erro!" + result.error.message}
                     </ErrorStyled>}
                   <SideMarginStyled>
-                    <Form type="email" setFieldValue={this.setFieldValue}></Form>
-                    <Form type="password" setFieldValue={this.setFieldValue}></Form>
+                    <Form type="email" setVariables={this.setVariables}></Form>
+                    <Form type="password" setVariables={this.setVariables}></Form>
                   </SideMarginStyled  >
                   <CustomButton type="submit" title="Entrar" enabled=
                     {this.state.valid.every(this.isValid)}/>
@@ -121,7 +121,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     localStorage.setItem(AUTH_TOKEN, token)
   }
 
-  private setFieldValue = (value: string, type: string, valid: boolean) => {
+  private setVariables = (value: string, type: string, valid: boolean) => {
     switch (type) {
       case 'email':
         this.setState({ email: value })
