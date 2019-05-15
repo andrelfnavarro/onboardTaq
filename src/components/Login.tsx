@@ -28,8 +28,6 @@ export interface LoginPageProps extends RouteComponentProps {
 }
 
 export interface LoginPageState {
-  emailValid: boolean;
-  passwordValid: boolean;
   formErrors: any;
   email: string;
   password: string;
@@ -45,8 +43,6 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
       email: '',
       password: '',
       formErrors: { email: '', password: '' },
-      emailValid: false,
-      passwordValid: false,
       valid: [false, false]
     }
   }
