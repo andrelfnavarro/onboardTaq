@@ -27,6 +27,7 @@
 
 #### Steps to run and debug: 
 In order to run the project, you should have npm installed. Install it using:
+
     npm install
     
 and then use:
