@@ -34,4 +34,4 @@ and then use:
 
     npm run start
     
-After that, a webpage will open on a local host showing you the Hello World message.
+After that, a webpage will open on a local host with the login screen.
