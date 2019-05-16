@@ -75,7 +75,7 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                   <SideMarginStyled>
                     <Form type="email" setVariables={this.setEmail}></Form>
                     <Form type="password" setVariables={this.setPassword}></Form>
-                  </SideMarginStyled  >
+                  </SideMarginStyled>
                   <CustomButton type="submit" title="Entrar"/>
                 </form>
               </>
