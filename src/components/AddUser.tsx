@@ -76,6 +76,7 @@ export default class AddUser extends React.Component<AddUserProps> {
   private handleCreateSuccess = (data: any) => {
     this.props.history.push('/users');
   }
+
   private submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
     const isFormValid: boolean = !!this.validFields.email &&
       !!this.validFields.name &&
@@ -108,29 +109,5 @@ export default class AddUser extends React.Component<AddUserProps> {
   private setBirthDate = (value:string, valid: boolean) => {
     if (valid) this.validFields.birthDate = value
   }
-  // private setVariables = (value: string, type: string, valid: boolean) => {
-  //   switch (type) {
-  //     case 'email':
-  //       if (valid) this.validFields.email = value
-  //       break;
-  //     case 'name':
-  //       if (valid) this.validFields.name = value
-  //       break;
-  //     case 'password':
-  //       if (valid) this.validFields.password = value
-  //       break;
-  //     case 'cpf':
-  //       if (valid) this.validFields.cpf = value
-  //       break;
-  //     case 'birthDate':
-  //       if (valid) this.validFields.birthDate = value
-  //       break;
-  //     case 'role':
-  //       if (valid) this.validFields.role = value
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
 }
 

@@ -21,10 +21,10 @@ query UserDetails($id:Int!){
   }
   `
 
-
 export interface UserDetailsProps {
   id: string;
 }
+
 export default class UserDetailsPage extends React.Component<RouteComponentProps<UserDetailsProps>> {
   render() {
     return (
@@ -53,7 +53,7 @@ export default class UserDetailsPage extends React.Component<RouteComponentProps
                 <form
                   style={{ textAlign: "center" }}
                   onSubmit={(event) => this.props.history.push('/users')}>
-                  <CustomButton type="submit" title="Voltar" enabled />
+                  <CustomButton type="submit" title="Voltar"/>
                 </form>
               </div>
             </div>

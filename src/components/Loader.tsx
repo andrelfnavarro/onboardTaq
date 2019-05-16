@@ -5,9 +5,7 @@ export interface LoaderProps {
   loading: boolean;
 }
 
-
 export const CustomLoader: React.SFC<LoaderProps> = props => (
-
   <div className='sweet-loading' style={{ textAlign: 'center', display: 'block' }}>
     <ClipLoader
       sizeUnit={"px"}
@@ -16,5 +14,4 @@ export const CustomLoader: React.SFC<LoaderProps> = props => (
       loading={props.loading}
     />
   </div>
-
 )
