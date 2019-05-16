@@ -28,30 +28,25 @@ export interface LoginPageProps extends RouteComponentProps {
 }
 
 export interface LoginPageState {
-  formErrors: any;
-  email: string;
-  password: string;
   token: string;
-  valid: any
 }
 
 export default class LoginPage extends React.Component<LoginPageProps, LoginPageState>{
+  private validFields = {
+    email: '',
+    password: ''
+  }
   constructor(props: LoginPageProps) {
     super(props);
     this.state = {
       token: "",
-      email: '',
-      password: '',
-      formErrors: { email: '', password: '' },
-      valid: [false, false]
     }
   }
-
   render() {
     const {
       email,
       password,
-    } = this.state;
+    } = this.validFields;
 
     return (
       <Wrapper>
@@ -78,11 +73,10 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
                       {"Erro!" + result.error.message}
                     </ErrorStyled>}
                   <SideMarginStyled>
-                    <Form type="email" setVariables={this.setVariables}></Form>
-                    <Form type="password" setVariables={this.setVariables}></Form>
+                    <Form type="email" setVariables={this.setEmail}></Form>
+                    <Form type="password" setVariables={this.setPassword}></Form>
                   </SideMarginStyled  >
-                  <CustomButton type="submit" title="Entrar" enabled=
-                    {this.state.valid.every(this.isValid)}/>
+                  <CustomButton type="submit" title="Entrar"/>
                 </form>
               </>
             )
@@ -92,49 +86,29 @@ export default class LoginPage extends React.Component<LoginPageProps, LoginPage
     );
   }
 
-  private isValid = (element:boolean, index:number, valid:[]) => {
-    return element
-  }
-
   private handleLoginSuccess = (data: any) => {
     this.saveUserData(data.Login.token)
     this.props.history.push('/users');
   }
 
-  private submit = (mutationFn: MutationFn, event: React.FormEvent) => {
-    event.preventDefault()
-    const {
-      email,
-      password,
-    } = this.state;
-
-    mutationFn({
-      variables: {
-        email,
-        password,
-      }
-    });
-
+  private submit = async (mutationFn: MutationFn, event: React.FormEvent) => {
+    const isFormValid: boolean = !!this.validFields.email &&
+      !!this.validFields.password;
+    if (isFormValid) {
+      mutationFn({ variables: this.validFields });
+    }
   }
 
   private saveUserData = (token: string) => {
     localStorage.setItem(AUTH_TOKEN, token)
   }
 
-  private setVariables = (value: string, type: string, valid: boolean) => {
-    switch (type) {
-      case 'email':
-        this.setState({ email: value })
-        if (valid) this.state.valid[0] = valid
-        break;
-      case 'password':
-        this.setState({ password: value })
-        if (valid) this.state.valid[1] = valid
-        break;
+  private setEmail = (value:string, valid: boolean) => {
+    if (valid) this.validFields.email = value
+  }
 
-      default:
-        break;
-    }
+  private setPassword = (value:string, valid: boolean) => {
+    if (valid) this.validFields.password = value
   }
 }
 

@@ -55,12 +55,12 @@ export default class AddUser extends React.Component<AddUserProps> {
                 {result.error && <div style={{ textAlign: 'center', color: 'red' }}>
                   {"Erro!" + result.error.message}</div>}
                 <SideMarginStyled>
-                  <Form type="email" setVariables={this.setVariables}></Form>
-                  <Form type="password" setVariables={this.setVariables}></Form>
-                  <Form type="name" setVariables={this.setVariables}></Form>
-                  <Form type="role" setVariables={this.setVariables}></Form>
-                  <Form type="cpf" setVariables={this.setVariables}></Form>
-                  <Form type="birthDate" setVariables={this.setVariables}></Form>
+                  <Form type="email" setVariables={this.setEmail}></Form>
+                  <Form type="password" setVariables={this.setPassword}></Form>
+                  <Form type="name" setVariables={this.setName}></Form>
+                  <Form type="role" setVariables={this.setRole}></Form>
+                  <Form type="cpf" setVariables={this.setCPF}></Form>
+                  <Form type="birthDate" setVariables={this.setBirthDate}></Form>
                 </SideMarginStyled>
                 <div style={{ textAlign: "center" }}>
                   <CustomButton type="submit" title="Criar" />
@@ -89,29 +89,48 @@ export default class AddUser extends React.Component<AddUserProps> {
     }
   }
 
-  private setVariables = (value: string, type: string, valid: boolean) => {
-    switch (type) {
-      case 'email':
-        if (valid) this.validFields.email = value
-        break;
-      case 'name':
-        if (valid) this.validFields.name = value
-        break;
-      case 'password':
-        if (valid) this.validFields.password = value
-        break;
-      case 'cpf':
-        if (valid) this.validFields.cpf = value
-        break;
-      case 'birthDate':
-        if (valid) this.validFields.birthDate = value
-        break;
-      case 'role':
-        if (valid) this.validFields.role = value
-        break;
-      default:
-        break;
-    }
+  private setEmail = (value:string, valid: boolean) => {
+    if (valid) this.validFields.email = value
   }
+
+  private setName = (value:string, valid: boolean) => {
+    if (valid) this.validFields.name = value
+  }
+  private setRole = (value:string, valid: boolean) => {
+    if (valid) this.validFields.role = value
+  }
+  private setCPF = (value:string, valid: boolean) => {
+    if (valid) this.validFields.cpf = value
+  }
+  private setPassword = (value:string, valid: boolean) => {
+    if (valid) this.validFields.password = value
+  }
+  private setBirthDate = (value:string, valid: boolean) => {
+    if (valid) this.validFields.birthDate = value
+  }
+  // private setVariables = (value: string, type: string, valid: boolean) => {
+  //   switch (type) {
+  //     case 'email':
+  //       if (valid) this.validFields.email = value
+  //       break;
+  //     case 'name':
+  //       if (valid) this.validFields.name = value
+  //       break;
+  //     case 'password':
+  //       if (valid) this.validFields.password = value
+  //       break;
+  //     case 'cpf':
+  //       if (valid) this.validFields.cpf = value
+  //       break;
+  //     case 'birthDate':
+  //       if (valid) this.validFields.birthDate = value
+  //       break;
+  //     case 'role':
+  //       if (valid) this.validFields.role = value
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 }
 
