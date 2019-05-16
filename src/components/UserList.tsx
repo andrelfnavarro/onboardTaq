@@ -1,9 +1,10 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query, QueryResult } from 'react-apollo';
-import './UserList.css'
 import { RouteComponentProps, Link } from 'react-router-dom';
-import Loader from './Loader'
+import {CustomLoader} from './Loader'
+import {H1, StripedListLine } from '../styles/Taqstyles'
+import { CustomButton } from './Button';
 
 const USERS_FETCH = gql`
 query UserList{
@@ -19,8 +20,7 @@ query UserList{
 export interface UserListPageProps extends RouteComponentProps {
 }
 
-export interface UserListPageState{
-  list: any[],
+export interface UserListPageState {
 }
 
 
@@ -28,25 +28,24 @@ export default class UserListPage extends React.Component<UserListPageProps, Use
   constructor(props: UserListPageProps) {
     super(props);
     this.state = {
-      list: []
+      currentPage: 1,
+      usersPerPage: 10
     }
+    this.handleClick = this.handleClick.bind(this);
   }
   render() {
     return (
       <Query
         query={USERS_FETCH}>{(result: QueryResult) => {
-          if (result.loading) return (
-              Loader(result.loading)
-          )
+          if (result.loading) return <CustomLoader loading={result.loading}></CustomLoader>
           if (result.error) return <h1>Erro!</h1>
-            // this.state.list = result.data.Users.nodes
           return (
-
             <div>
-              <h1 style={{ textAlign: 'center' }}> Usuários cadastrados</h1>
-              <div className='addButtonBox'>
+              <H1 style={{ textAlign: 'center' }}> Usuários cadastrados</H1>
+              <div
+                style={{ textAlign: "center" }}>
                 <form onSubmit={(event) => this.props.history.push('/adduser')}>
-                  <button type="submit" className='addButton'>Adicione um usuário</button>
+                <CustomButton type="submit" title="Adicionar usuário" enabled />
                 </form>
               </div>
               <div >
@@ -54,14 +53,19 @@ export default class UserListPage extends React.Component<UserListPageProps, Use
                   {result.data.Users.nodes.map((value: { name: string; email: string; id: string; }) =>
                     <li key={value.name}>
                       <div style={{ padding: 10, outline: 'solid' }}>
-                          <div style={{ backgroundColor: '#e6b3ff' }}> Nome: {value.name}</div>
-                          <div >E-mail: {value.email}
-                            <Link to={'/userdetails/' + value.id}>
-                              Details
-                            </Link>
-                          </div>
-                        </div>
-\                    </li>
+                        <StripedListLine> Nome: {value.name}</StripedListLine>
+                        <div>E-mail: {value.email}</div>
+                        <StripedListLine>
+                          <Link
+                            style={{ fontWeight: "bold" }}
+                            to=
+                            {'/userdetails/' + value.id}
+                          >
+                            Detalhes
+                          </Link>
+                        </StripedListLine>
+                      </div>
+                    </li>
                   )}
                 </ul>
               </div>
@@ -70,6 +74,13 @@ export default class UserListPage extends React.Component<UserListPageProps, Use
           )
         }
         }</Query>
+
     )
+  }
+
+  private handleClick(e: any) {
+    this.setState({
+      currentPage: Number(e.target.id)
+    });
   }
 }

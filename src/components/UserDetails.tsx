@@ -1,9 +1,11 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query, QueryResult, QueryProps, OperationVariables } from 'react-apollo';
-import './UserList.css'
+import { Query, QueryResult } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
-import Loader from './Loader'
+import { CustomLoader } from './Loader'
+import { H1, StripedListLine } from '../styles/Taqstyles'
+import { CustomButton } from './Button';
+
 
 const USER_DATA = gql`
 query UserDetails($id:Int!){
@@ -14,7 +16,7 @@ query UserDetails($id:Int!){
       cpf
       role
       email
-      
+
     }
   }
   `
@@ -31,33 +33,33 @@ export default class UserDetailsPage extends React.Component<RouteComponentProps
         variables={{
           id: this.props.match.params.id
         }}>{(result: QueryResult) => {
-          if (result.loading) return (
-            Loader(result.loading)
-          )
+          if (result.loading) return <CustomLoader loading={result.loading}></CustomLoader>
           if (result.error) return <h1>{"Erro!" + result.error.message}</h1>
           let user = result.data.User
           return (
             <div>
-              <h1 style={{ textAlign: 'center' }}> Dados de {user.name}</h1>
+              <H1> Dados de {user.name}</H1>
               <div >
                 <div style={{ padding: 10, outline: 'solid' }} >
-                  <div style={{ backgroundColor: '#e6b3ff' }}> Nome: {user.name}</div>
+                  <StripedListLine> Nome: {user.name}</StripedListLine>
                   <div>E-mail: {user.email}</div>
-                  <div style={{ backgroundColor: '#e6b3ff' }}>Role: {user.role}</div>
+                  <StripedListLine>Role: {user.role}</StripedListLine>
                   <div>ID: {user.id}</div>
-                  <div style={{ backgroundColor: '#e6b3ff' }}>CPF: {user.cpf}</div>
-                  <div>Data de nascimento: {user.birthDate}</div>
+                  <StripedListLine>CPF: {user.cpf}</StripedListLine>
+                  <div>Data de nascimento: {(user.birthDate)}</div>
                 </div>
               </div>
               <div>
-                <form onSubmit={(event) => this.props.history.push('/users')}>
-                  <button type="submit" className='addButton'>Voltar</button>
+                <form
+                  style={{ textAlign: "center" }}
+                  onSubmit={(event) => this.props.history.push('/users')}>
+                  <CustomButton type="submit" title="Voltar" enabled />
                 </form>
               </div>
             </div>
           )
         }
-      }</Query>
+        }</Query>
     )
   }
 }

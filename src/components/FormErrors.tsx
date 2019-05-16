@@ -1,4 +1,5 @@
 import React from 'react';
+import { ErrorStyled } from '../styles/Taqstyles';
 
 
 export const FormErrors = ({formErrors} : {formErrors : any}) =>
@@ -6,8 +7,8 @@ export const FormErrors = ({formErrors} : {formErrors : any}) =>
     {Object.keys(formErrors).map((fieldName, i) => {
       if(formErrors[fieldName].length > 0){
         return (
-          <p key={i}>{fieldName} {formErrors[fieldName]}</p>
-        )        
+          <ErrorStyled>Conteúdo {formErrors[fieldName]}</ErrorStyled>
+        )
       } else {
         return '';
       }
